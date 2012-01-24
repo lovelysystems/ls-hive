@@ -10,7 +10,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.IntObjectInspector;
 
 @UDFType(deterministic = true)
-@Description(name = "arrayitem", value = "_FUNC_(array, pos) - Returns the element at pos")
+@Description(name = "arrayitem", value = "_FUNC_(array, pos) - Returns the element at pos with support for negative positions")
 public class ArrayItemUDF extends GenericUDF {
 
     private ListObjectInspector listOI = null;
