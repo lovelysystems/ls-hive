@@ -3,14 +3,14 @@ package com.lovelysystems.hive.udf;
 import org.apache.hadoop.hive.ql.exec.Description;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
-import org.apache.hadoop.hive.ql.udf.UDFType;
 import org.apache.hadoop.hive.ql.udf.generic.GenericUDF;
 import org.apache.hadoop.hive.serde2.objectinspector.ListObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.IntObjectInspector;
 
-@UDFType(deterministic = true)
-@Description(name = "arrayitem", value = "_FUNC_(array, pos) - Returns the element at pos with support for negative positions")
+@Description(
+        name = "arrayitem",
+        value = "_FUNC_(array, pos) - Returns the element at pos with support for negative positions")
 public class ArrayItemUDF extends GenericUDF {
 
     private ListObjectInspector listOI = null;
