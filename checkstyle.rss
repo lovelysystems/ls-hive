@@ -8,8 +8,8 @@
     <language>en-us</language>
     <copyright>&#169;2012</copyright>
     <item>
-      <title>File: 1,
-             Errors: 12,
+      <title>File: 6,
+             Errors: 67,
              Warnings: 0,
              Infos: 0
       </title>
@@ -29,6 +29,62 @@
           <tbody>
                           <tr>
                 <td>
+                  <a href="https://github.com/lovelysystems/ls-hive/checkstyle.html#com.lovelysystems.hive.udf.UnescapeXMLUDF.java">com/lovelysystems/hive/udf/UnescapeXMLUDF.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  6
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lovelysystems/ls-hive/checkstyle.html#com.lovelysystems.hive.udf.RowNumberUDF.java">com/lovelysystems/hive/udf/RowNumberUDF.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lovelysystems/ls-hive/checkstyle.html#com.lovelysystems.hive.udf.RegexExtractAllUDF.java">com/lovelysystems/hive/udf/RegexExtractAllUDF.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  12
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lovelysystems/ls-hive/checkstyle.html#com.lovelysystems.hive.udf.ESHashUDF.java">com/lovelysystems/hive/udf/ESHashUDF.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/lovelysystems/ls-hive/checkstyle.html#com.lovelysystems.hive.udf.ArrayItemUDF.java">com/lovelysystems/hive/udf/ArrayItemUDF.java</a>
                 </td>
                 <td>
@@ -39,6 +95,20 @@
                 </td>
                 <td>
                   12
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/lovelysystems/ls-hive/checkstyle.html#com.lovelysystems.hive.udf.MemcachedUDF.java">com/lovelysystems/hive/udf/MemcachedUDF.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  17
                 </td>
               </tr>
                       </tbody>
