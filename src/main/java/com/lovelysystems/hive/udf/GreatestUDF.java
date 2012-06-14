@@ -20,12 +20,11 @@ import org.apache.hadoop.io.LongWritable;
                 + "  > SELECT GREATEST(foo, bar) FROM users;\n")
 public class GreatestUDF extends GenericUDF {
 
-    private ObjectInspector[] argumentOIs;
     private GenericUDFUtils.ReturnObjectInspectorResolver returnOIResolver;
+    private ObjectInspector compareType;
 
     @Override
-    public ObjectInspector initialize(ObjectInspector[] arguments) throws UDFArgumentException {
-        argumentOIs = arguments;
+    public ObjectInspector initialize(ObjectInspector ... arguments) throws UDFArgumentException {
 
         returnOIResolver = new GenericUDFUtils.ReturnObjectInspectorResolver();
         for (int i = 0; i < arguments.length; i++) {
@@ -37,18 +36,19 @@ public class GreatestUDF extends GenericUDF {
                                 + "\" is found");
             }
         }
-        return returnOIResolver.get();
+        compareType = returnOIResolver.get();
+        return compareType;
     }
 
     @Override
     public Object evaluate(GenericUDF.DeferredObject ... arguments) throws HiveException {
 
-        ObjectInspector compareType = returnOIResolver.get();
         Object maxVal = null;
         for (int i = 0; i < arguments.length; i++) {
-            if (arguments[i] != null) {
-                if (maxVal == null || ObjectInspectorUtils.compare(arguments[i].get(), compareType, maxVal, compareType) > 0) {
-                    maxVal = arguments[i].get();
+            GenericUDF.DeferredObject val = arguments[i];
+            if (val != null) {
+                if (maxVal == null || ObjectInspectorUtils.compare(val.get(), compareType, maxVal, compareType) > 0) {
+                    maxVal = val.get();
                 }
             }
         }

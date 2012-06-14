@@ -7,7 +7,10 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableIntObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableStringObjectInspector;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import static org.junit.Assert.assertEquals;
 
 public class GreatestUDFTest {
@@ -27,26 +30,36 @@ public class GreatestUDFTest {
 
     }
 
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    /**
+    * Objects to compare must be the same type
+    */
     @Test
-    public void testEvaluate() {
+    public void testInitialize() throws UDFArgumentException {
+
+        thrown.expect(UDFArgumentException.class);
+        thrown.expectMessage("The expressions after GREATEST should all have the same type: \"int\" is expected but \"string\" is found");
+
         GreatestUDF udf = new GreatestUDF();
 
-        /*
-         * Objects to compare must be the same type
-         */
         SettableIntObjectInspector firstInt = PrimitiveObjectInspectorFactory.javaIntObjectInspector;
         SettableStringObjectInspector firstString = PrimitiveObjectInspectorFactory.javaStringObjectInspector;
 
-        try {
-            udf.initialize(new ObjectInspector[] { firstInt, firstString });
-        } catch (UDFArgumentException e1) {
-            String msg = "The expressions after GREATEST should all have the same type: \"int\" is expected but \"string\" is found";
-            assertEquals(msg, e1.getMessage());
-        }
+        udf.initialize(new ObjectInspector[] { firstInt, firstString });
+    }
 
-        /*
-         * Comparing integers
-         */
+    /*
+     * Comparing integers
+     */
+    @Test
+    public void testEvaluateWithInt() {
+        GreatestUDF udf = new GreatestUDF();
+
+
+        SettableIntObjectInspector firstInt = PrimitiveObjectInspectorFactory.javaIntObjectInspector;
         SettableIntObjectInspector secondInt = PrimitiveObjectInspectorFactory.javaIntObjectInspector;
 
         try {
@@ -71,10 +84,18 @@ public class GreatestUDFTest {
             e1.printStackTrace();
         }
 
-        /*
-         * Compare Strings
-         */
+
+    }
+
+    /**
+     * Compare Strings
+     */
+    @Test
+    public void testEvaluateWithString() {
+        GreatestUDF udf = new GreatestUDF();
+
         SettableStringObjectInspector secondString = PrimitiveObjectInspectorFactory.javaStringObjectInspector;
+        SettableStringObjectInspector firstString = PrimitiveObjectInspectorFactory.javaStringObjectInspector;
 
         try {
             udf.initialize(new ObjectInspector[] { firstString, secondString });
@@ -91,6 +112,6 @@ public class GreatestUDFTest {
         }   catch (HiveException e1) {
             e1.printStackTrace();
         }
-    }
 
+    }
 }
