@@ -65,3 +65,4 @@ project and push.
 This approach was take from the very useful blog entry at
 http://cemerick.com/2010/08/24/hosting-maven-repos-on-github/
 
+
