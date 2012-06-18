@@ -94,20 +94,6 @@ public final class UDAFCumulateHistogram extends UDAF {
         }
 
         /**
-         * Merge with a partial aggregation.
-         *
-         * This function should always have a single argument which has the same
-         * type as the return value of terminatePartial().
-         */
-        public boolean merge(UDAFCollectHistogram.UDAFCollectHistogramState o) {
-            if (o == null) {
-                return true;
-            }
-            state.elements = mergeHistograms(state.elements, o.elements);
-            return true;
-        }
-
-        /**
          * Terminate a partial aggregation and return the state. If the state is
          * a primitive, just return primitive Java classes like Integer or
          * String.
