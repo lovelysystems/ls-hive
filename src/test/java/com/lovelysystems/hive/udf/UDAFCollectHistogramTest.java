@@ -14,19 +14,9 @@ public class UDAFCollectHistogramTest {
      * cumulate two rows
      */
     @Test
-    public void testCollect() {
+    public void testCollectDifferentTS() {
 
         UDAFCollectHistogram.UDAFCollectHistogramEvaluator evaluator = new UDAFCollectHistogram.UDAFCollectHistogramEvaluator();
-
-        HashMap<String, HashMap<Integer, ArrayList<Integer>>> row1 = new HashMap<String, HashMap<Integer, ArrayList<Integer>>>();
-        HashMap<Integer, ArrayList<Integer>> counts1 = new HashMap<Integer, ArrayList<Integer>>();
-        counts1.put(1, new ArrayList<Integer>(Arrays.asList(1, 3, 5)));
-        row1.put("http://twitter.com/quodt", counts1);
-
-        HashMap<String, HashMap<Integer, ArrayList<Integer>>> row2 = new HashMap<String, HashMap<Integer, ArrayList<Integer>>>();
-        HashMap<Integer, ArrayList<Integer>> counts2 = new HashMap<Integer, ArrayList<Integer>>();
-        counts2.put(2, new ArrayList<Integer>(Arrays.asList(2, 5, 9)));
-        row2.put("http://twitter.com/quodt", counts2);
 
         evaluator.iterate("http://twitter.com/quodt", 1, "1 3 5");
         evaluator.iterate("http://twitter.com/quodt", 2, "2 5 9");
@@ -34,6 +24,20 @@ public class UDAFCollectHistogramTest {
         HashMap<String, HashMap<Integer, ArrayList<Integer>>> res = evaluator.terminate();
 
         assertEquals("{http://twitter.com/quodt={1=[1, 3, 5], 2=[2, 5, 9]}}", res.toString());
+
+    }
+
+    @Test
+    public void testCollectSameTS() {
+
+        UDAFCollectHistogram.UDAFCollectHistogramEvaluator evaluator = new UDAFCollectHistogram.UDAFCollectHistogramEvaluator();
+
+        evaluator.iterate("http://twitter.com/quodt", 1, "1 3 5");
+        evaluator.iterate("http://twitter.com/quodt", 1, "2 4 6");
+
+        HashMap<String, HashMap<Integer, ArrayList<Integer>>> res = evaluator.terminate();
+
+        assertEquals("{http://twitter.com/quodt={1=[1, 3, 5]}}", res.toString());
 
     }
 
