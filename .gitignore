@@ -1,3 +1,4 @@
 target
 bin
-
+.idea
+ls-hive.iml
