@@ -114,7 +114,45 @@ public final class UDAFCollectHistogram extends UDAF {
             }
         }
 
+        @SuppressWarnings("unchecked")
+        public static HashMap<String, HashMap<Integer, ArrayList<Integer>>> mergeHistograms(
+                HashMap<String, HashMap<Integer, ArrayList<Integer>>> l,
+                HashMap<String, HashMap<Integer, ArrayList<Integer>>> r
+        ) {
+            //HashMap<String, HashMap<Integer, ArrayList<Integer>>> res;
+            for (Entry<String, HashMap<Integer, ArrayList<Integer>>> re : r
+                    .entrySet()) {
+                HashMap<Integer, ArrayList<Integer>> v;
+                if (l.containsKey(re.getKey())){
+                    v = l.get(re.getKey());
+                } else{
+                    v = new HashMap<Integer, ArrayList<Integer>>();
+                }
+                for (Entry<Integer, ArrayList<Integer>>  ev : re.getValue()
+                        .entrySet()) {
+                    if (ev.getValue() == null) {
+                        continue;
+                    }
+                    v.put(ev.getKey(), (ArrayList<Integer>) ev.getValue().clone());
+                }
+                l.put(re.getKey(), v);
+            }
+            return l;
+        }
 
+        /**
+         * Merge with a partial aggregation.
+         *
+         * This function should always have a single argument which has the same
+         * type as the return value of terminatePartial().
+         */
+         public boolean merge(UDAFCollectHistogram.UDAFCollectHistogramState o) {
+              if (o == null) {
+                    return true;
+              }
+              state.elements = mergeHistograms(state.elements, o.elements);
+              return true;
+         }
 
         /**
          * Terminates the aggregation and return the final result.

@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import static com.lovelysystems.hive.udf.UDAFCollectHistogram.UDAFCollectHistogramEvaluator.mergeHistograms;
+
 
 /**
  * Cumulate histogram over counts
@@ -70,28 +72,6 @@ public final class UDAFCumulateHistogram extends UDAF {
             return true;
         }
 
-        @SuppressWarnings("unchecked")
-        public static HashMap<String, HashMap<Integer, ArrayList<Integer>>> mergeHistograms(
-                HashMap<String, HashMap<Integer, ArrayList<Integer>>> l,
-                HashMap<String, HashMap<Integer, ArrayList<Integer>>> r
-        ) {
-            //HashMap<String, HashMap<Integer, ArrayList<Integer>>> res;
-            for (Entry<String, HashMap<Integer, ArrayList<Integer>>> re : r
-                    .entrySet()) {
-                HashMap<Integer, ArrayList<Integer>> v;
-                if (l.containsKey(re.getKey())){
-                    v = l.get(re.getKey());
-                } else{
-                    v = new HashMap<Integer, ArrayList<Integer>>();
-                }
-                for (Entry<Integer, ArrayList<Integer>>  ev : re.getValue()
-                        .entrySet()) {
-                    v.put(ev.getKey(), (ArrayList<Integer>) ev.getValue().clone());
-                }
-                l.put(re.getKey(), v);
-            }
-            return l;
-        }
 
         /**
          * Terminate a partial aggregation and return the state. If the state is
