@@ -5,6 +5,8 @@ Changes for ls-hive
 unreleased
 ==========
 
+ - added SequenceIdUDF
+
 2012/06/19 0.3-SNAPSHOT
 =======================
 
