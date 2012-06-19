@@ -47,9 +47,8 @@ public class UDAFCumulateHistogramTest {
     }
 
     /**
-     * While cumulate multiple counts of the same timestamp the last value will win but in practice it doesn't
-     * matter if the first or the last value will win since it is very unlikely that there are different values for the
-     * same timestamp.
+     * The UDAF guarantees that data of a url and a particular timestamp is distinct but it does not guarantee which
+     * dataset of ambiguous input data will be used for the result.
      */
     @Test
     public void testCumulateSameTS() {
