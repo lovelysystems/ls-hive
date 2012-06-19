@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class UDAFCollectHistogramTest {
 
     /*
-     * cumulate two rows
+     * Collect counts of two rows.
      */
     @Test
     public void testCollectDifferentTS() {
@@ -27,6 +27,11 @@ public class UDAFCollectHistogramTest {
 
     }
 
+    /**
+     * While collecting multiple counts of the same timestamp the first value will win but in practice it doesn't
+     * matter if the first or the last value will win since it is very unlikely that there are different values for the
+     * same timestamp.
+     */
     @Test
     public void testCollectSameTS() {
 

@@ -46,8 +46,10 @@ public class UDAFCumulateHistogramTest {
 
     }
 
-    /*
-     * cumulate two rows with counts with same timestamp
+    /**
+     * While cumulate multiple counts of the same timestamp the last value will win but in practice it doesn't
+     * matter if the first or the last value will win since it is very unlikely that there are different values for the
+     * same timestamp.
      */
     @Test
     public void testCumulateSameTS() {
@@ -70,6 +72,24 @@ public class UDAFCumulateHistogramTest {
         HashMap<String, HashMap<Integer, ArrayList<Integer>>> res = evaluator.terminate();
 
         assertEquals("{http://twitter.com/quodt={1=[2, 4, 6]}}", res.toString());
+
+    }
+
+    @Test
+    public void testNullValues() {
+        UDAFCumulateHistogram.UDAFCumulateHistogramEvaluator evaluator = new UDAFCumulateHistogram.UDAFCumulateHistogramEvaluator();
+
+        HashMap<String, HashMap<Integer, ArrayList<Integer>>> row0 = new HashMap<String, HashMap<Integer, ArrayList<Integer>>>();
+        HashMap<Integer, ArrayList<Integer>> counts0 = new HashMap<Integer, ArrayList<Integer>>();
+        counts0.put(1, null);
+        row0.put("http://twitter.com/quodt", counts0);
+
+        evaluator.iterate(null);
+        evaluator.iterate(row0);
+
+        HashMap<String, HashMap<Integer, ArrayList<Integer>>> res = evaluator.terminate();
+
+        assertEquals("{http://twitter.com/quodt={}}", res.toString());
 
     }
 
