@@ -39,6 +39,12 @@ UDFs
  Unescapes the basic xml entitities in ``src``.
 
 
+``Long SequenceIdUDF(Long existing)``
+
+ Generates a unique sequence id per row, returns existing if not
+ null. This also generates unique sequences accross multiple task
+ trackers by using the mapreduce task id.
+
 Maven
 =====
 
