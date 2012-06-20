@@ -2,8 +2,8 @@
 Changes for ls-hive
 ===================
 
-unreleased
-==========
+2012/06/20 0.4-SNAPSHOT
+=======================
 
  - added SequenceIdUDF
 
