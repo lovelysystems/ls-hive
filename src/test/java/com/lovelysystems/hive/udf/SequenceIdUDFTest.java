@@ -56,5 +56,14 @@ public class SequenceIdUDFTest {
         
 
     }
+    
+    @Test 
+    public void testLocalMode() {
+        // if no work directory is defined the task id is set to one, because 
+        // it is assumed that the udf is running in local mode       
+        SequenceIdUDF udf1 = new SequenceIdUDF();
+        String res1 = Long.toBinaryString(udf1.evaluate(null));
+        assertEquals("000000000001", res1.substring(res1.length()-32, res1.length()-20));
+    }
 
 }

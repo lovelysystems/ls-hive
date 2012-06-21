@@ -1,5 +1,6 @@
 package com.lovelysystems.hive.udf;
 
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hive.ql.exec.Description;
 import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.hadoop.hive.ql.udf.UDFType;
@@ -9,6 +10,8 @@ import org.apache.hadoop.mapred.TaskAttemptID;
 @Description(name = "sequenceid",
         value = "_FUNC_(existing) - Returns a unique sequence id per call or existing if not null")
 public class SequenceIdUDF extends UDF {
+    
+    private static org.apache.commons.logging.Log LOG = LogFactory.getLog("com.lovelysystems.hive.udf.SequenceIdUDF");
     
     private String workdir = null;
     private long taskId = -1;
@@ -20,19 +23,28 @@ public class SequenceIdUDF extends UDF {
     
 
     public void setWorkdir(){
-        setWorkdir(System.getenv().get("HADOOP_WORK_DIR"));
+        String workdir = System.getenv().get("HADOOP_WORK_DIR");
+        if (workdir == null){
+            LOG.warn("Unable to get workdir from HADOOP_WORK_DIR environment variable using ''");
+            workdir = "";
+        }
+        setWorkdir(workdir);
     }
     
     public void setWorkdir(String workdir){
-        assert(workdir!=null && workdir.length()>0);
         this.workdir = workdir;
     }
     
     private long getTaskId(){
         if (taskId == -1){
-            String[] parts = workdir.split("/");
-            TaskAttemptID res = TaskAttemptID.forName(parts[parts.length-2]);
-            this.taskId = res.getTaskID().getId();
+            if (workdir == null || workdir.length()<1){
+                LOG.warn("No workdir is defined using 1 as taskId");
+                this.taskId = 1;
+            } else{
+                String[] parts = workdir.split("/");
+                TaskAttemptID res = TaskAttemptID.forName(parts[parts.length-2]);
+                this.taskId = res.getTaskID().getId();                
+            }
             assert(taskId<=MAX_TASKID);
         }
         return taskId;
@@ -55,6 +67,7 @@ public class SequenceIdUDF extends UDF {
         if (existing != null){
             return existing;
         }
+        
         if (workdir == null){
             setWorkdir();
         }

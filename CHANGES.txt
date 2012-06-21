@@ -2,6 +2,11 @@
 Changes for ls-hive
 ===================
 
+unreleased
+==========
+
+ - handle hadoop local mode in SequenceIdUDF
+
 2012/06/20 0.4-SNAPSHOT
 =======================
 
