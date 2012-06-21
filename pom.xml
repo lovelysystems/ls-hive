@@ -4,7 +4,7 @@
 
 	<groupId>com.lovelysystems.hive</groupId>
 	<artifactId>ls-hive</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.5-SNAPSHOT</version>
 	<name>Lovely Systems Hive</name>
 	<description>Hive UDFs by Lovelysystems</description>
 	<url>https://github.com/lovelysystems/ls-hive</url>
