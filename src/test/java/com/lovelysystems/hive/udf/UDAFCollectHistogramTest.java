@@ -45,4 +45,25 @@ public class UDAFCollectHistogramTest {
 
     }
 
+    @Test
+    public void testCollectInvalidCount() {
+        UDAFCollectHistogram.UDAFCollectHistogramEvaluator evaluator = new UDAFCollectHistogram.UDAFCollectHistogramEvaluator();
+
+        evaluator.iterate("http://twitter.com/quodt", 1, "");
+
+        HashMap<String, HashMap<Integer, ArrayList<Integer>>> res1 = evaluator.terminate();
+        assertEquals("{}", res1.toString());
+
+        evaluator.iterate("http://twitter.com/quodt", 1, "    ");
+
+        HashMap<String, HashMap<Integer, ArrayList<Integer>>> res2 = evaluator.terminate();
+        assertEquals("{}", res2.toString());
+
+        evaluator.iterate("http://twitter.com/quodt", 1, "    ");
+
+        HashMap<String, HashMap<Integer, ArrayList<Integer>>> res3 = evaluator.terminate();
+        assertEquals("{}", res3.toString());
+
+    }
+
 }
