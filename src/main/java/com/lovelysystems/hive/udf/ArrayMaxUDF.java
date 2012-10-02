@@ -24,8 +24,8 @@ import org.apache.hadoop.io.IntWritable;
 import java.util.ArrayList;
 
 @UDFType(deterministic = true)
-@Description(name = "arraysum",
-        value = "_FUNC_(a) - Returns the sum of array items")
+@Description(name = "arraymax",
+        value = "_FUNC_(a) - Returns the max of array items")
 public class ArrayMaxUDF extends UDF {
 
     private final IntWritable result = new IntWritable();
