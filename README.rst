@@ -45,6 +45,16 @@ UDFs
  null. This also generates unique sequences accross multiple task
  trackers by using the mapreduce task id.
 
+``ArraySumUDF(ArrayList<ArrayList<Integer>>)``:
+
+  Returns the sum of a two dimensional ArrayList. Empty ArrayLists and
+  null values will get ignored.
+
+``ArrayMaxUDF(ArrayList<ArrayList<Integer>>)``:
+
+  Returns the maximum of a two dimensional ArrayList. Empty ArrayLists and
+  null values will get ignored.
+
 Maven
 =====
 

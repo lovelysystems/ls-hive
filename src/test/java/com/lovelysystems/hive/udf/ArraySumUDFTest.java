@@ -13,13 +13,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by IntelliJ IDEA.
- * User: bernd
- * Date: 27.09.12
- * Time: 16:34
- * To change this template use File | Settings | File Templates.
- */
+
 public class ArraySumUDFTest {
     @Test
     public void testEvaluate() {
