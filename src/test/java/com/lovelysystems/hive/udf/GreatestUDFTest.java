@@ -7,6 +7,8 @@ import org.apache.hadoop.hive.serde2.objectinspector.ObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableIntObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableStringObjectInspector;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -71,13 +73,22 @@ public class GreatestUDFTest {
         try {
             assertEquals(null, udf.evaluate(null, null));
 
-            assertEquals(3, udf.evaluate(null, new DJO(3)));
+            assertEquals(new IntWritable(3), udf.evaluate(null,
+                    new DJO(new IntWritable(3))
+            ));
 
-            assertEquals(3, udf.evaluate(new DJO(3), null));
+            assertEquals(new IntWritable(3), udf.evaluate(new DJO(new
+                    IntWritable
+                    (3)), null));
 
-            assertEquals(12, udf.evaluate(new DJO(12), new DJO(5)));
+            assertEquals(new IntWritable(12), udf.evaluate(new DJO(new
+                    IntWritable(12)),
+                    new DJO(new IntWritable(5))));
 
-            assertEquals(12, udf.evaluate(new DJO(3), new DJO(12), new DJO(5)));
+            assertEquals(new IntWritable(12), udf.evaluate(new DJO(new
+                    IntWritable(3)),
+                    new DJO(new IntWritable(12)), new DJO(new IntWritable(5))
+            ));
 
 
         }   catch (HiveException e1) {
@@ -105,9 +116,14 @@ public class GreatestUDFTest {
 
         try {
 
-            assertEquals("oranges", udf.evaluate(new DJO("apples"), new DJO("oranges"), new DJO("bananas")));
+            assertEquals(new Text("oranges"), udf.evaluate(new DJO(new Text
+                    ("apples")),
+                    new DJO(new Text("oranges")), new DJO(new Text("bananas"))
+            ));
 
-            assertEquals("applis", udf.evaluate(new DJO("apples"), new DJO("applis"), new DJO("applas")));
+            assertEquals(new Text("applis"), udf.evaluate(new DJO
+                    (new Text("apples")), new DJO(new Text("applis")),
+                    new DJO(new Text("applas"))));
 
         }   catch (HiveException e1) {
             e1.printStackTrace();
